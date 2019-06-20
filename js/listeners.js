@@ -154,11 +154,32 @@ addEventListener('keydown', event =>{
   if(event.keyCode === 65){
 
     player1[1].attack(player1, 0)
+    ctx.beginPath()
+    ctx.fillStyle="white";
+    ctx.font = "bold 16px sans-serif";
+    ctx.fillText(`Médico del IMSS usó Paracetamol y restauró 60 puntos de vida a sus compañeros`,50,50);
+    ctx.closePath()
   }
 })
 addEventListener('keydown', event =>{
   if(event.keyCode === 83){
 
     player1[1].attack(player1, 1)
+    ctx.beginPath()
+    ctx.fillStyle="white";
+    ctx.font = "bold 16px sans-serif";
+    ctx.fillText(`Médico del IMSS usó Atropina y restauró 50 puntos de fuerza a sus compañeros`,50,50);
+    ctx.closePath()
+  }
+})
+addEventListener('keydown', event =>{
+  if(event.keyCode === 68){
+
+    player1[1].attack(player2[1], 2)
+    ctx.beginPath()
+    ctx.fillStyle="white";
+    ctx.font = "bold 16px sans-serif";
+    ctx.fillText(`Médico Sermoneó a Ingeniera Química y redujo su defensa en 40 puntos`,50,50);
+    ctx.closePath()
   }
 })

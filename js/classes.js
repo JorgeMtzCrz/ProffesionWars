@@ -369,46 +369,57 @@ class Medico{
       }
     this.attack = (player1,b) =>{
       
-        if(this.sp >=95){
+        // if(this.sp >=95){
           if(b <1){
             player1.forEach(e=> {
               return e.hp += this.powers[0].hp
             })
             this.sp -= this.powers[0].sp
-            ctx.fillStyle="white";
-            ctx.font = "bold 16px sans-serif";
-            ctx.fillText(`${this.name} usó ${this.powers[0].name} recuperando ${this.powers[0].hp} puntos de vida a su equipo, su STR restante es ${this.sp}`,50,50);
-          
+            // ctx.beginPath()
+            // ctx.fillStyle="white";
+            // ctx.font = "bold 16px sans-serif";
+            // ctx.fillText(`${this.name} usó ${this.powers[0].name} recuperando ${this.powers[0].hp} puntos de vida a su equipo, su STR restante es ${this.sp}`,50,50);
+            // ctx.closePath()
             
-            }} else{
-            ctx.fillStyle="white";
-            ctx.font = "bold 14px sans-serif";
-            ctx.fillText(`Fuerza Insuficiente para atacar. STR mínimo 95 puntos`,50,50)}
-        
+            } 
+            // else{
+            // ctx.beginPath()
+            // ctx.fillStyle="white";
+            // ctx.font = "bold 14px sans-serif";
+            // ctx.fillText(`Fuerza Insuficiente para atacar. STR mínimo 95 puntos`,50,50)}
+            // ctx.closePath()}
 
-        if(this.sp>=60){
+        // if(this.sp>=60){
            if(b < 2){
-            
               player1.forEach(e=> {
                 return e.sp += this.powers[1].spMas
               })
               this.sp -= this.powers[1].sp
-              ctx.fillStyle="white";
-              ctx.font = "bold 16px sans-serif";
-              ctx.fillText(`${this.name} usó ${this.powers[1].name} recuperando ${this.powers[1].spMas} puntos de energía a su equipo, su STR restante es ${this.sp}`,50,50);
-            }else{
-            ctx.fillStyle="white";
-            ctx.font = "bold 14px sans-serif";
-            ctx.fillText(`Fuerza Insuficiente para atacar. STR mínimo 60 puntos`,50,50)}
+              // ctx.beginPath()
+              // ctx.fillStyle="white";
+              // ctx.font = "bold 16px sans-serif";
+              // ctx.fillText(`${this.name} usó ${this.powers[1].name} recuperando ${this.powers[1].spMas} puntos de energía a su equipo, su STR restante es ${this.sp}`,50,50);
+              // ctx.closePath()
             }
+            // }else{
+            // ctx.beginPath()
+            // ctx.fillStyle="white";
+            // ctx.font = "bold 14px sans-serif";
+            // ctx.fillText(`Fuerza Insuficiente para atacar. STR mínimo 60 puntos`,50,50)}
+            // ctx.closePath()
+            // }
             
-        else if(b <3){
-          player1.defense -= this.powers[2].damage
+        if(b <3){
+          player1.defense -= this.powers[2].defense
               this.sp -= this.powers[2].sp
-              return `${this.name} usó ${this.powers[2].name} y bajó ${this.powers[2].defense} puntos de defensa, su STR restante es ${this.sp}`
+              // ctx.beginPath()
+              // ctx.fillStyle="white";
+              // ctx.font = "bold 16px sans-serif";
+              // ctx.fillText(`${this.name} usó ${this.powers[2].name} y bajó ${this.powers[2].defense} puntos de defensa, su STR restante es ${this.sp}`,50,50);
+              // ctx.closePath()
           }
 
-        else if(b <4){
+        if(b <4){
           player1.hp -= this.powers[3].damage
             this.sp -= this.powers[3].sp
             return `${this.name} usó ${this.powers[3].name} pero no atendió al joven causándole ${this.powers[3].damage} puntos de daño, su STR restante es ${this.sp}`
