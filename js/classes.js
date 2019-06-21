@@ -76,8 +76,8 @@ class Board{
 
 class CharacterIni{
   constructor(){
-    this.x = 150
-    this.y = -10
+    this.x = 250
+    this.y = 110
     this.x2 = 350
     this.y2 = 250
     this.width = 600
@@ -97,7 +97,10 @@ class CharacterIni{
      if(this.x<450) this.x +=this.dx
     }
   draw(){
-    ctx.drawImage(this.img, this.x, this.y, this.width, this.height)
+    ctx.fillStyle="white"
+    ctx.font = "bold 40px sans-serif";
+    ctx.fillText('PROFFESIONS', this.x, this.y)
+    ctx.fillText('WAR', 500,160)
     ctx.drawImage(this.img2, this.x2, this.y2, this.width2, this.height2)
     // ctx.drawImage(this.img, this.x - 300, this.y, this.width, this.height)
   }
