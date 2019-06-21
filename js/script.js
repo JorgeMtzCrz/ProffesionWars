@@ -1,16 +1,18 @@
   window.onload = function() {
-   board.draw()
+   battle
+    board.draw()
    personajeini.draw()
  
    document.getElementById("start-button").onclick = function() {
     
     startGame();
+    
    };
 
 
    
   function update(){
-    
+    battle
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     frames++
     board.draw()
@@ -27,15 +29,14 @@
     abogado.draw()
     
   }
-
-
   
-    
+  
 
-
-   function startGame() {
+function startGame() {
+     
      if (interval) return
      interval = setInterval(update, 1000/60)
+     update()
 
    }
 

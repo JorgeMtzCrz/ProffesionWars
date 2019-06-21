@@ -5,6 +5,7 @@ let interval
 let frames = 0
 const player1 =[]
 const player2 = []
+let battle 
 
 
 const board = new Board()

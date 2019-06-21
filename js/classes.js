@@ -58,6 +58,18 @@ class Board{
     ctx.fillText(`X:`, 260 , 210 )
     ctx.fillText(`C:`, 260 , 230 )
     ctx.fillText(`V:`, 260 , 250 )
+    ctx.fillText(`T:`, 475 , 190 )
+    ctx.fillText(`Y:`, 475 , 210 )
+    ctx.fillText(`U:`, 475 , 230 )
+    ctx.fillText(`I:`, 475 , 250 )
+    ctx.fillText(`H:`, 625 , 190 )
+    ctx.fillText(`J:`, 625 , 210 )
+    ctx.fillText(`K:`, 625 , 230 )
+    ctx.fillText(`L:`, 625 , 250 )
+    ctx.fillText(`B:`, 765 , 190 )
+    ctx.fillText(`N:`, 765 , 210 )
+    ctx.fillText(`M:`, 765 , 230 )
+    ctx.fillText(` ,:`, 765 , 250 )
 
   }
 }
@@ -128,13 +140,13 @@ class IngSistemas{
     this.img2.src = './img/personajeini-rigth.png'
     this.name = name
     this.powers = [
-          {name: 'Codigo Compilado', damage: 30, sp: 40},
-          {name: 'Fuerza del cafe', hp: 10, sp: 30},
-          {name: 'Aventar la computadora', damage: 50, sp: 70},
-          {name: 'Presentar proyecto', defense: 30, sp: 20}
+          {name: 'Codigo Compilado', damage: 80, sp: 40},
+          {name: 'Fuerza del cafe', hp: 30, sp: 30},
+          {name: 'Aventar la computadora', damage: 90, sp: 70},
+          {name: 'Presentar proyecto', defense: 50, sp: 20}
           ]
-    this.hp = 200
-    this.sp = 120
+    this.hp = 250
+    this.sp = 750
     this.defense = 50
     this.isDead = () =>{
       if(this.hp<=0){
@@ -143,36 +155,45 @@ class IngSistemas{
       }
     }
   this.attack = (personaje,b) =>{
-      if(b < 2){
-      this.hp += this.powers[1].hp 
-      this.sp -= this.powers[1].sp
-      
-      return `${this.name} usó ${this.powers[1].name} incrementó su HP en ${this.powers[1].hp} su STR restante es ${this.sp}`
-      }
-      else if(b <1){
-        if(this.defense <= 50){
-          personaje.hp -= (this.powers[0].damage)*2
+      if(b <1){
+        if(personaje.hp>0){
+          if(personaje.defense <= 50){
+            personaje.hp -= (this.powers[0].damage)*2
+            this.sp -= this.powers[0].sp
+            return `${this.name} usó ${this.powers[0].name} causó ${this.powers[0].damage*2} de daño y su STR restante es ${this.sp}`
+          }
+          personaje.hp -= this.powers[0].damage
           this.sp -= this.powers[0].sp
-          return `${this.name} usó ${this.powers[0].name} causó ${this.powers[0].damage*2} de daño y su STR restante es ${this.sp}`
+          return `${this.name} usó ${this.powers[0].name} su sp restante es ${this.sp}`
         }
-        personaje.hp -= this.powers[0].damage
-        this.sp -= this.powers[0].sp
-        return `${this.name} usó ${this.powers[0].name} su sp restante es ${this.sp}`
+        
         }
+      else if(b < 2){
+          if(personaje.hp>0){
+          personaje.hp += this.powers[1].hp 
+          this.sp -= this.powers[1].sp
+          return `${this.name} usó ${this.powers[1].name} incrementó su HP en ${this.powers[1].hp} su STR restante es ${this.sp}`
+          }
+          
+          }
       else if(b <3){
-        if(this.defense <= 30){
-          personaje.hp -= (this.powers[2].damage)*2
+        if(personaje.hp>0){
+          if(personaje.defense <= 30){
+            personaje.hp -= (this.powers[2].damage)*2
+            this.sp -= this.powers[2].sp
+            return `${this.name} usó ${this.powers[2].name} causó ${this.powers[2].damage*2} de daño y su STR restante es ${this.sp}`
+          }
+          personaje.hp -= this.powers[2].damage
           this.sp -= this.powers[2].sp
-          return `${this.name} usó ${this.powers[2].name} causó ${this.powers[2].damage*2} de daño y su STR restante es ${this.sp}`
-        }
-        personaje.hp -= this.powers[2].damage
-        this.sp -= this.powers[2].sp
-        return `${this.name} usó ${this.powers[2].name} causó ${this.powers[2].damage} de daño y su STR restante es ${this.sp}`
+          return `${this.name} usó ${this.powers[2].name} causó ${this.powers[2].damage} de daño y su STR restante es ${this.sp}`
+          }
         }
       else if(b <4){
-        personaje.defense -= this.powers[3].defense
-        this.sp -= this.powers[3].sp
-        return `${this.name} usó ${this.powers[3].name} aburrió a su oponente y redujo su defensa ${this.powers[3].defense} puntos, su STR restante es ${this.sp}`
+          personaje.forEach(e=>{
+            e.defense -= this.powers[3].defense
+          })      
+          this.sp -= this.powers[3].sp
+          return `${this.name} usó ${this.powers[3].name} aburrió a su oponente y redujo su defensa ${this.powers[3].defense} puntos, su STR restante es ${this.sp}`
         }
   }
   this.noMana = (personaje, b) =>{
@@ -223,6 +244,30 @@ class IngSistemas{
     ctx.fillText(`DEF:${ingSis.defense}`, 790 + (position * -130), 160 )
     })
   }
+  drawPowers1(){
+    player1.forEach((character) => {
+      let position = player1.indexOf(ingSis)
+    if(character===ingSis)
+    ctx.fillStyle="white"
+    ctx.font = "bold 12px sans-serif";
+    ctx.fillText(` Código Compilado`, 30 +(position*120), 190 )
+    ctx.fillText(` Fuerza del Café`, 30 +(position*120) , 210 )
+    ctx.fillText(` Aventar PC`,30 +(position*120), 230 )
+    ctx.fillText(` Presentar proyecto`, 30+(position*120), 250 ) 
+    })
+  }
+  drawPowers2(){
+    player2.forEach((character) => {
+      let position = player2.indexOf(ingSis)
+    if(character===ingSis)
+    ctx.fillStyle="white"
+    ctx.font = "bold 12px sans-serif";
+    ctx.fillText(` Código Compilado`, 770 +(position*-140), 190 )
+    ctx.fillText(` Fuerza del Café`, 770 +(position*-140) , 210 )
+    ctx.fillText(` Aventar PC`,770 +(position*-140), 230 )
+    ctx.fillText(` Presentar proyecto`, 770+(position*-140), 250 ) 
+    })
+  }
 }
 
 
@@ -242,13 +287,13 @@ class IngCivil{
       this.img2.src = './img/civil-rigth.png'
       this.name = name
       this.powers = [
-            {name: 'Lanzar ladrillo', damage: 60, sp: 45},
-            {name: 'Pone una barda', defense: 30, sp: 30},
+            {name: 'Lanzar ladrillo', damage: 120, sp: 45},
+            {name: 'Pone una barda', defense: 40, sp: 30},
             {name: 'Bolsas de cemento', damage: 50, sp: 70},
-            {name: 'El último esfuerzo', damage: 30, sp: 10}
+            {name: 'El último esfuerzo', damage: 80, sp: 10}
             ]
-      this.hp = 150
-      this.sp = 100
+      this.hp = 350
+      this.sp = 800
       this.defense = 120
       this.isDead = () =>{
         if(this.hp<=0){
@@ -257,28 +302,41 @@ class IngCivil{
         }
       }
     this.attack = (personaje,b) =>{
-        if(b < 2){
-        this.defense += this.powers[1].defense 
-        this.sp -= this.powers[1].sp
-        return `${this.name} usó ${this.powers[1].name} su defensa se incrementó ${this.powers[1].defense} puntos`
-        }
-        else if(b <1){
+        
+        if(b <1){
+          if(personaje.hp >0){
           if(this.defense <= 50){
+            
             personaje.hp -= (this.powers[0].damage)*2.5
             this.sp -= this.powers[0].sp
-            return `${this.name} usó ${this.powers[0].name} causó ${this.powers[0].damage*2.5} de daño y su sp restante es ${this.sp}`
-          }
+            return `${this.name} usó ${this.powers[0].name} causó ${this.powers[0].damage*2.5} de daño y su sp restante es ${this.sp}`}
+          
           personaje.hp -= this.powers[0].damage
           this.sp -= this.powers[0].sp
           return `${this.name} usó ${this.powers[0].name} causando ${this.powers[0].damage} puntos de daños, su sp restante es ${this.sp}`
+            }
           }
+          
+        else if(b < 2){
+          personaje.forEach(e=>{
+            e.defense += this.powers[1].defense
+          })
+            this.sp -= this.powers[1].sp
+            return `${this.name} usó ${this.powers[1].name} su defensa se incrementó ${this.powers[1].defense} puntos`
+            }
         else if(b <3){
           if(this.defense <= 30){
-            personaje.hp -= (this.powers[2].damage)*2
+            personaje.forEach(e=>{
+              if(e.hp>0)
+              e.hp -= (this.powers[2].damage)*2
+            })
             this.sp -= this.powers[2].sp
             return `${this.name} lanzó ${this.powers[2].name} causando ${this.powers[2].damage*3} puntos de daño y su sp restante es ${this.sp}`
           }
-          personaje.hp -= this.powers[2].damage
+          personaje.forEach(e=>{
+            if(e.hp>0)
+            e.hp -= this.powers[2].damage
+          })
           this.sp -= this.powers[2].sp
           return `${this.name} lanzó ${this.powers[2].name} causando ${this.powers[2].damage} puntos de daño su sp restante es ${this.sp}`
           }
@@ -335,6 +393,30 @@ class IngCivil{
       ctx.fillText(`DEF:${ingCiv.defense}`, 790 + (position * -130), 160 )
       })
     }
+    drawPowers1(){
+      player1.forEach((character) => {
+        let position = player1.indexOf(ingCiv)
+      if(character===ingCiv)
+      ctx.fillStyle="white"
+      ctx.font = "bold 12px sans-serif";
+      ctx.fillText(` Lanzar Ladrillo`, 30 +(position*120), 190 )
+      ctx.fillText(` Pone una barda`, 30 +(position*120) , 210 )
+      ctx.fillText(` Bolsas de Cemento`,30 +(position*120), 230 )
+      ctx.fillText(` El ultimo esfuerzo`, 30+(position*120), 250 ) 
+      })
+    }
+    drawPowers2(){
+      player2.forEach((character) => {
+        let position = player2.indexOf(ingCiv)
+      if(character===ingCiv)
+      ctx.fillStyle="white"
+      ctx.font = "bold 12px sans-serif";
+      ctx.fillText(` Lanzar Ladrillo`, 780 +(position*-140), 190 )
+      ctx.fillText(` Pone una barda`, 780 +(position*-140) , 210 )
+      ctx.fillText(` Bolsas de Cemento`,780 +(position*-140), 230 )
+      ctx.fillText(` El ultimo esfuerzo`, 780+(position*-140), 250 ) 
+      })
+    }
   }
 
 class Medico{
@@ -347,6 +429,8 @@ class Medico{
       this.y3 = 320
       this.img2 = new Image()
       this.img2.src = './img/medico-rigth.png'
+      this.img3 = new Image()
+      this.img3.src = './img/medico-dead-rigth.png'
       this.width = 100
       this.height = 150
       this.img = new Image()
@@ -356,10 +440,10 @@ class Medico{
             {name: 'Paracetamol', hp: 60, sp: 95},
             {name: 'Atropina', spMas: 50, sp: 60},
             {name: 'Te sermonea', defense: 40, sp: 70},
-            {name: 'Ahorita lo atiendo joven', damage: 20, sp: 15}
+            {name: 'Ahorita lo atiendo joven', damage: 90, sp: 15}
             ]
       this.hp = 250
-      this.sp = 650
+      this.sp = 1200
       this.defense = 120
       this.isDead = () =>{
         if(this.hp<=0){
@@ -372,15 +456,10 @@ class Medico{
         // if(this.sp >=95){
           if(b <1){
             player1.forEach(e=> {
+              if(e.hp>0)
               return e.hp += this.powers[0].hp
             })
-            this.sp -= this.powers[0].sp
-            // ctx.beginPath()
-            // ctx.fillStyle="white";
-            // ctx.font = "bold 16px sans-serif";
-            // ctx.fillText(`${this.name} usó ${this.powers[0].name} recuperando ${this.powers[0].hp} puntos de vida a su equipo, su STR restante es ${this.sp}`,50,50);
-            // ctx.closePath()
-            
+            this.sp -= this.powers[0].sp            
             } 
             // else{
             // ctx.beginPath()
@@ -434,10 +513,18 @@ class Medico{
     }
     drawPlayer1(){
       let position = player1.indexOf(medico)
+      if(medico.hp>0){
       ctx.drawImage(this.img2, this.x2 + position*120, this.y2, this.width, this.height)
       ctx.fillStyle="white"
       ctx.font = "bold 12px sans-serif";
-      ctx.fillText("Médico del IMSS",this.x2 + position*120,300); 
+      ctx.fillText("Médico del IMSS",this.x2 + position*120,300);
+      }else{
+      ctx.drawImage(this.img3, this.x2 + position*120, this.y2, this.width, this.height)
+      ctx.fillStyle="white"
+      ctx.font = "bold 12px sans-serif";
+      ctx.fillText("Médico del IMSS",this.x2 + position*120,300);
+      }
+       
     }
     drawPlayer2(){
       let position = player2.indexOf(medico)
@@ -478,6 +565,20 @@ class Medico{
       })
 
     }
+    drawWin1(){
+      let position = player1.indexOf(medico)
+      if(medico.hp>0){
+        ctx.drawImage(this.img2, this.x2 + position + 400, this.y2, this.width, this.height)
+        ctx.fillStyle="white"
+        ctx.font = "bold 12px sans-serif";
+        ctx.fillText("Médico del IMSS",this.x2 + position+400,300);
+      }else{
+        ctx.drawImage(this.img3, this.x2 + position+400, this.y2, this.width, this.height)
+        ctx.fillStyle="white"
+        ctx.font = "bold 12px sans-serif";
+        ctx.fillText("Médico del IMSS",this.x2 + position+400,300);
+      } 
+    }
   }
 
 class Administradora{
@@ -490,19 +591,21 @@ class Administradora{
       this.y2 = 320
       this.x3 = 760
       this.y3 = 320
+      this.img3 = new Image()
+      this.img3.src = './img/administradora-dead-rigth.png'
       this.img2 = new Image()
       this.img2.src = './img/administradora-rigth.png'
       this.img = new Image()
       this.img.src = './img/administradora.png'
       this.name = name
       this.powers = [
-            {name: 'Carpetazo', hp: 40, sp: 45},
+            {name: 'Carpetazo', damage: 110, sp: 45},
             {name: 'Checa tus impuestos', defense: 50, sp: 50},
             {name: 'Come una garnacha', hp: 20, sp: 30},
-            {name: 'Recaudación', damage: 20, sp: 15}
+            {name: 'Recaudación', damage: 70, sp: 65}
             ]
-      this.hp = 170
-      this.sp = 160
+      this.hp = 270
+      this.sp = 800
       this.defense = 100
       this.isDead = () =>{
         if(this.hp<=0){
@@ -511,33 +614,28 @@ class Administradora{
         }
       }
     this.attack = (personaje,b) =>{
-        if(b < 2){
-        personaje.hp += this.powers[1].defense 
-        this.sp -= this.powers[1].sp
+        if(b < 1){
+        personaje.hp -= this.powers[0].damage 
+        this.sp -= this.powers[0].sp
         return `${this.name} usó ${this.powers[1].name} su defensa se incrementó ${this.powers[1].defense} puntos`
         }
-        else if(b <1){
-          if(this.defense <= 50){
-            personaje.hp -= (this.powers[0].damage)*2.5
-            this.sp -= this.powers[0].sp
-            return `${this.name} usó ${this.powers[0].name} causó ${this.powers[0].damage*2.5} de daño y su sp restante es ${this.sp}`
-          }
-          personaje.hp -= this.powers[0].damage
-          this.sp -= this.powers[0].sp
+        else if(b <2){
+          personaje.forEach(e=> {
+            
+            return e.defense -= this.powers[1].defense
+          })
+          this.sp -= this.powers[1].sp
           return `${this.name} usó ${this.powers[0].name} causando ${this.powers[0].damage} puntos de daños, su sp restante es ${this.sp}`
           }
         else if(b <3){
-          if(this.defense <= 30){
-            personaje.hp -= (this.powers[2].damage)*2
+            personaje.hp += this.powers[2].hp
             this.sp -= this.powers[2].sp
             return `${this.name} lanzó ${this.powers[2].name} causando ${this.powers[2].damage*3} puntos de daño y su sp restante es ${this.sp}`
           }
-          personaje.hp -= this.powers[2].damage
-          this.sp -= this.powers[2].sp
-          return `${this.name} lanzó ${this.powers[2].name} causando ${this.powers[2].damage} puntos de daño su sp restante es ${this.sp}`
-          }
         else if(b <4){
-          personaje.hp -= this.powers[3].damage
+          personaje.forEach(e=>{
+            return e.hp -= this.powers[3].damage
+          })
           this.sp -= this.powers[3].sp
           return `${this.name} usó ${this.powers[3].name} y causó un daño de ${this.powers[3].damage} puntos, su sp restante es ${this.sp}`
           }
@@ -559,10 +657,18 @@ class Administradora{
     }
     drawPlayer1(){
       let position = player1.indexOf(administradora)
+      if(administradora.hp>0){
       ctx.drawImage(this.img2, this.x2 + position*120, this.y2, this.width, this.height)
       ctx.fillStyle="white"
       ctx.font = "bold 12px sans-serif";
       ctx.fillText("Admin. del SAT",this.x2 + position*120,300); 
+      }else{
+      ctx.drawImage(this.img3, this.x2 + position*120, this.y2, this.width, this.height)
+      ctx.fillStyle="white"
+      ctx.font = "bold 12px sans-serif";
+      ctx.fillText("Admin. del SAT",this.x2 + position*120,300); 
+      }
+      
     }
     drawPlayer2(){
       let position = player2.indexOf(administradora)
@@ -589,6 +695,32 @@ class Administradora{
       ctx.fillText(`DEF:${administradora.defense}`, 790 + (position * -130), 160 )
       })
     }
+    drawPowers1(){
+      player1.forEach((character) => {
+        let position = player1.indexOf(administradora)
+      if(character===administradora)
+      ctx.fillStyle="white"
+      ctx.font = "bold 12px sans-serif";
+      ctx.fillText(` Carpetazo`, 30 +(position*120), 190 )
+      ctx.fillText(` Checa tus impuestos`, 30 +(position*120) , 210 )
+      ctx.fillText(` Come una garnacha`,30 +(position*120), 230 )
+      ctx.fillText(` Recaudación`, 30+(position*120), 250 ) 
+      })
+    }
+    drawWin1(){
+      let position = player1.indexOf(administradora)
+      if(administradora.hp>0){
+        ctx.drawImage(this.img2, this.x2 + position + 550, this.y2, this.width, this.height)
+        ctx.fillStyle="white"
+        ctx.font = "bold 12px sans-serif";
+        ctx.fillText("Admin del SAT",this.x2 + position+550,300);
+      }else{
+        ctx.drawImage(this.img3, this.x2 + position+550, this.y2, this.width, this.height)
+        ctx.fillStyle="white"
+        ctx.font = "bold 12px sans-serif";
+        ctx.fillText("Admin del SAT",this.x2 + position+550,300);
+      } 
+    }
 }
 
 
@@ -608,13 +740,13 @@ class IngQuimica{
     this.img.src = './img/quimica.png'
     this.name = name
     this.powers = [
-          {name: 'Paracetamol', hp: 60, sp: 95},
-          {name: 'Atropina', spMas: 50, sp: 60},
-          {name: 'Te sermonea', defense: 40, sp: 70},
-          {name: 'Ahorita lo atiendo joven', damage: 20, sp: 15}
+          {name: 'Ácido', damage: 120, sp: 85},
+          {name: 'Metanfetamina', spMas: 80, sp: 80},
+          {name: 'Combina elementos', damage: 100, sp: 70},
+          {name: 'Te hace una cuba', damage: 80, sp: 65}
           ]
     this.hp = 250
-    this.sp = 250
+    this.sp = 1500
     this.defense = 120
     this.isDead = () =>{
       if(this.hp<=0){
@@ -623,35 +755,48 @@ class IngQuimica{
       }
     }
   this.attack = (personaje,b) =>{
-      if(b < 1){
-      this.defense += this.powers[1].defense 
-      this.sp -= this.powers[1].sp
-      return `${this.name} usó ${this.powers[1].name} su defensa se incrementó ${this.powers[1].defense} puntos`
-      }
-      else if(b <2){
-        if(this.defense <= 50){
-          personaje.hp -= (this.powers[0].damage)*2.5
+      
+      if(b <1){
+        if(personaje.hp>0){
+          if(this.defense <= 50){
+            personaje.hp -= (this.powers[0].damage)*2.5
+            this.sp -= this.powers[0].sp
+            return `${this.name} usó ${this.powers[0].name} causó ${this.powers[0].damage*2.5} de daño y su sp restante es ${this.sp}`
+          }
+          personaje.hp -= this.powers[0].damage
           this.sp -= this.powers[0].sp
-          return `${this.name} usó ${this.powers[0].name} causó ${this.powers[0].damage*2.5} de daño y su sp restante es ${this.sp}`
+          return `${this.name} usó ${this.powers[0].name} causando ${this.powers[0].damage} puntos de daños, su sp restante es ${this.sp}`
         }
-        personaje.hp -= this.powers[0].damage
-        this.sp -= this.powers[0].sp
-        return `${this.name} usó ${this.powers[0].name} causando ${this.powers[0].damage} puntos de daños, su sp restante es ${this.sp}`
+        
         }
+      else if(b < 2){
+        personaje.forEach(e=>{
+          e.sp += this.powers[1].spMas
+          this.sp -= this.powers[1].sp
+          return `${this.name} usó ${this.powers[1].name} su defensa se incrementó ${this.powers[1].defense} puntos`
+        })
+          
+      }
       else if(b <3){
-        if(this.defense <= 30){
-          personaje.hp -= (this.powers[2].damage)*2
+        if(personaje.hp>0){
+          if(this.defense <= 30){
+            personaje.hp -= (this.powers[2].damage)*2
+            this.sp -= this.powers[2].sp
+            return `${this.name} lanzó ${this.powers[2].name} causando ${this.powers[2].damage*3} puntos de daño y su sp restante es ${this.sp}`
+          }
+          personaje.hp -= this.powers[2].damage
           this.sp -= this.powers[2].sp
-          return `${this.name} lanzó ${this.powers[2].name} causando ${this.powers[2].damage*3} puntos de daño y su sp restante es ${this.sp}`
+          return `${this.name} lanzó ${this.powers[2].name} causando ${this.powers[2].damage} puntos de daño su sp restante es ${this.sp}`
         }
-        personaje.hp -= this.powers[2].damage
-        this.sp -= this.powers[2].sp
-        return `${this.name} lanzó ${this.powers[2].name} causando ${this.powers[2].damage} puntos de daño su sp restante es ${this.sp}`
+        
         }
       else if(b <4){
-        personaje.hp -= this.powers[3].damage
-        this.sp -= this.powers[3].sp
-        return `${this.name} usó ${this.powers[3].name} y causó un daño de ${this.powers[3].damage} puntos, su sp restante es ${this.sp}`
+        if(personaje.hp>0){
+          personaje.hp -= this.powers[3].damage
+          this.sp -= this.powers[3].sp
+          return `${this.name} usó ${this.powers[3].name} y causó un daño de ${this.powers[3].damage} puntos, su sp restante es ${this.sp}`
+        }
+        
         }
   }
   this.noMana = (personaje, b) =>{
@@ -699,6 +844,18 @@ class IngQuimica{
     ctx.fillText(`HP:${ingQui.hp}`, 790 + (position * -130), 120 )
     ctx.fillText(`STR:${ingQui.sp}`, 790 + (position * -130), 140 )
     ctx.fillText(`DEF:${ingQui.defense}`, 790 + (position * -130), 160 )
+    })
+  }
+  drawPowers2(){
+    player2.forEach((character) => {
+      let position = player2.indexOf(ingQui)
+    if(character===ingQui)
+    ctx.fillStyle="white"
+    ctx.font = "bold 12px sans-serif";
+    ctx.fillText(` Ácido`, 770 +(position*-130), 190 )
+    ctx.fillText(` Metanfetamina`, 770 +(position*-130) , 210 )
+    ctx.fillText(` Combina elementos`,770 +(position*-130), 230 )
+    ctx.fillText(` Te hace una cuba`, 770+(position*-130), 250 ) 
     })
   }
 }
@@ -938,17 +1095,19 @@ class Abogado{
     this.y3 = 320
     this.img2 = new Image()
     this.img2.src = './img/abogado-rigth.png'
+    this.img3 = new Image()
+    this.img3.src = './img/abogado-dead-rigth.png'
     this.img = new Image()
     this.img.src = './img/abogado.png'
     this.name = name
     this.powers = [
-          {name: 'Paracetamol', hp: 60, sp: 95},
-          {name: 'Atropina', spMas: 50, sp: 60},
-          {name: 'Te sermonea', defense: 40, sp: 70},
-          {name: 'Ahorita lo atiendo joven', damage: 20, sp: 15}
+          {name: 'Pide para las copias', damage: 500, sp: 95},
+          {name: 'Te saca del torito', spMas: 30, sp: 60},
+          {name: 'Golpe de maletín', damage: 90, sp: 70},
+          {name: 'Cocker Attack', damage: 50, sp: 25}
           ]
     this.hp = 250
-    this.sp = 250
+    this.sp = 850
     this.defense = 120
     this.isDead = () =>{
       if(this.hp<=0){
@@ -956,34 +1115,31 @@ class Abogado{
         {return `${this.name} resistió el ataque, sus estadisticas son HP:${this.hp}, SP:${this.sp}, DEF:${this.defense}`
       }
     }
-  this.attack = (personaje,b) =>{
+  this.attack = (player1,b) =>{
       if(b < 1){
-      this.defense += this.powers[1].defense 
-      this.sp -= this.powers[1].sp
-      return `${this.name} usó ${this.powers[1].name} su defensa se incrementó ${this.powers[1].defense} puntos`
+      player1.forEach(e=> {
+          return e.hp -= this.powers[0].damage
+        })
+      this.sp -= this.powers[0].sp
+      
       }
       else if(b <2){
-        if(this.defense <= 50){
-          personaje.hp -= (this.powers[0].damage)*2.5
-          this.sp -= this.powers[0].sp
-          return `${this.name} usó ${this.powers[0].name} causó ${this.powers[0].damage*2.5} de daño y su sp restante es ${this.sp}`
-        }
-        personaje.hp -= this.powers[0].damage
-        this.sp -= this.powers[0].sp
-        return `${this.name} usó ${this.powers[0].name} causando ${this.powers[0].damage} puntos de daños, su sp restante es ${this.sp}`
+        player1.forEach(e=> {
+          return e.sp += this.powers[1].sp
+        })
+        this.sp -= this.powers[1].sp
+        
         }
       else if(b <3){
         if(this.defense <= 30){
-          personaje.hp -= (this.powers[2].damage)*2
+          player1.hp -= (this.powers[2].damage)*2
           this.sp -= this.powers[2].sp
           return `${this.name} lanzó ${this.powers[2].name} causando ${this.powers[2].damage*3} puntos de daño y su sp restante es ${this.sp}`
-        }
-        personaje.hp -= this.powers[2].damage
+        }player1.hp -= (this.powers[2].damage)
         this.sp -= this.powers[2].sp
-        return `${this.name} lanzó ${this.powers[2].name} causando ${this.powers[2].damage} puntos de daño su sp restante es ${this.sp}`
         }
       else if(b <4){
-        personaje.hp -= this.powers[3].damage
+        player1.hp -= this.powers[3].damage
         this.sp -= this.powers[3].sp
         return `${this.name} usó ${this.powers[3].name} y causó un daño de ${this.powers[3].damage} puntos, su sp restante es ${this.sp}`
         }
@@ -1005,10 +1161,17 @@ class Abogado{
   }
   drawPlayer1(){
     let position = player1.indexOf(abogado)
-    ctx.drawImage(this.img2, this.x2 + position*120, this.y2, this.width, this.height)
-    ctx.fillStyle="white"
-    ctx.font = "bold 12px sans-serif";
-    ctx.fillText("Abogangster PetF",this.x2 + position*120,300); 
+    if(abogado.hp>0){
+      ctx.drawImage(this.img2, this.x2 + position*120, this.y2, this.width, this.height)
+      ctx.fillStyle="white"
+      ctx.font = "bold 12px sans-serif";
+      ctx.fillText("Abogangster PetF",this.x2 + position*120,300);
+    }else{
+      ctx.drawImage(this.img3, this.x2 + position*120, this.y2, this.width, this.height)
+      ctx.fillStyle="white"
+      ctx.font = "bold 12px sans-serif";
+      ctx.fillText("Abogangster PetF",this.x2 + position*120,300);
+    } 
   }
   drawPlayer2(){
     let position = player2.indexOf(abogado)
@@ -1034,5 +1197,31 @@ class Abogado{
     ctx.fillText(`STR:${abogado.sp}`, 790 + (position * -130), 140 )
     ctx.fillText(`DEF:${abogado.defense}`, 790 + (position * -130), 160 )
     })
+  }
+  drawPowers1(){
+    player1.forEach((character) => {
+      let position = player1.indexOf(abogado)
+    if(character===abogado)
+    ctx.fillStyle="white"
+    ctx.font = "bold 12px sans-serif";
+    ctx.fillText(` Saca las copias`, 30 +(position*120), 190 )
+    ctx.fillText(` Te saca del torito`, 30 +(position*120) , 210 )
+    ctx.fillText(` Golpe de Maletín`,30 +(position*120), 230 )
+    ctx.fillText(` Cocker Attack`, 30+(position*120), 250 ) 
+    })
+  }
+  drawWin1(){
+    let position = player1.indexOf(abogado)
+    if(abogado.hp>0){
+      ctx.drawImage(this.img2, this.x2 + position + 250, this.y2, this.width, this.height)
+      ctx.fillStyle="white"
+      ctx.font = "bold 12px sans-serif";
+      ctx.fillText("Abogangster PetF",this.x2 + position+250,300);
+    }else{
+      ctx.drawImage(this.img3, this.x2 + position+250, this.y2, this.width, this.height)
+      ctx.fillStyle="white"
+      ctx.font = "bold 12px sans-serif";
+      ctx.fillText("Abogangster PetF",this.x2 + position+250,300);
+    } 
   }
 }
